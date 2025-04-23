@@ -60,9 +60,23 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined symbols
 )
 
+include(FetchContent)
+FetchContent_Declare(stm32rcos
+  GIT_REPOSITORY https://github.com/eyr1n/stm32rcos.git
+  GIT_TAG 0eeffd247fae6df7a39bc73cf512d438b77705ed
+)
+FetchContent_Declare(stm32rcos_drivers
+  GIT_REPOSITORY https://github.com/eyr1n/stm32rcos_drivers.git
+  GIT_TAG 16328b0efb4699cf5388f17ca2bedec15bc545e4
+)
+FetchContent_MakeAvailable(stm32rcos stm32rcos_drivers)
+
 # Add linked libraries
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
     # Add user defined libraries
+    stm32rcos
+    stm32rcos::printf_float
+    stm32rcos_drivers
 )
